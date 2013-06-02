@@ -1,3 +1,7 @@
+<?php if ($error != null) {
+    echo '<div class="alert-error">'.$error.'</div>';
+}
+?>
 <form method="POST">
     <fieldset>
         <legend>Регистрация</legend>

@@ -67,6 +67,16 @@ class Login extends \App\Page {
             $password = $this->request->post('password');
             $fio = $this->request->post('fio');
 
+            // ========= checks ============
+            $db_email = $this->pixie->orm->get('user')->where('email',$login)->find();
+            if ($db_email->loaded()) {
+                $error = "Пользователь с таким email уже существует";
+                $this->view->subview = 'register';
+                $this->view->error = $error;
+                return;
+            }
+            // ========= /checks ============
+
             //Attempt to login the user using his
             //username and password
             $hash = $this->pixie->auth->provider('password')->hash_password($password);
@@ -75,9 +85,11 @@ class Login extends \App\Page {
             $user->email = $login;
             $user->password = $hash;
             $user->fio = $fio;
+            $user->faculty = $this->pixie->orm->get('faculty')->where('id',1)->find();
             $user->save();
-
+            $this->redirect('/');
         }
+        $this->view->error = null;
         //Include 'login.php' subview
         $this->view->subview = 'register';
     }

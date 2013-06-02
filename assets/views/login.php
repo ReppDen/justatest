@@ -6,7 +6,7 @@
     <fieldset>
         <legend>Авторизация</legend>
         <label>Email пользователя</label>
-        <input type="text" name="username" placeholder="email" required >
+        <input type="text" name="username" placeholder="email" required>
         <label>Пароль</label>
         <input type="password" name="password" required >
         <br/>
