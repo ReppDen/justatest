@@ -25,7 +25,7 @@ class Page extends \PHPixie\Controller {
         }
 
         if($role && !$this->pixie->auth->has_role($role)){
-            $this->response->body = "You don't have the permissions to access this page";
+            $this->response->body = $this->pixie->auth->provider('password')->hash_password("qweasd");//"You don't have the permissions to access this page";
             $this->execute=false;
             return false;
         }

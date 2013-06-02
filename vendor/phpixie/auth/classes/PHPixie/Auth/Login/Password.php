@@ -60,6 +60,7 @@ class Password extends Provider {
 						->where($this->login_field, $login)
 						->find();
 		if($user->loaded()){
+
 			$password_field = $this->password_field;
 			$challenge = $user->$password_field;
 			

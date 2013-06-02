@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css" rel="stylesheet"/>
+    <link href="/css/bootstrap-combined.min.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">

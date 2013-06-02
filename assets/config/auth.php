@@ -7,7 +7,8 @@ return array(
         'login' => array(
             'password' => array(
                 'login_field' => 'email',
-                'password_field' => 'password'
+                'password_field' => 'password',
+                'hash_method' => 'md5'
             )
         ),
 
