@@ -4,5 +4,5 @@ return array(
 					'controller' => 'Login',
 					'action' => 'index'
 					)
-				),
+				)
 );

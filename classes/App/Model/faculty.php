@@ -15,6 +15,14 @@ class Faculty extends \PHPixie\ORM\Model {
         'users'=>array(
             'model'=>'user',
             'key'=>'faculties_id'
-        )
+        ),
+        'awards'=>array(
+            'model'=>'award',
+            'key'=>'faculties_id'
+        ),
+        'stages'=>array(
+            'model'=>'stage',
+            'key'=>'faculties_id'
+        ),
     );
 }

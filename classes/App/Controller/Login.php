@@ -15,17 +15,17 @@ class Login extends \App\Page {
 
     }
 
-    public function action_admin(){
-
-        if(!$this->logged_in('admin'))
-            return;
-
-        $this->view->message = $this->pixie->auth->user()->email;
-
-        //Include 'hello.php' subview
-        $this->view->subview = 'admin';
-
-    }
+//    public function action_admin(){
+//
+//        if(!$this->logged_in('admin'))
+//            return;
+//
+//        $this->view->message = $this->pixie->auth->user()->email;
+//
+//        //Include 'hello.php' subview
+//        $this->view->subview = 'admin';
+//
+//    }
 
     public function action_login() {
 

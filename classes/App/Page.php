@@ -8,7 +8,9 @@ class Page extends \PHPixie\Controller {
     protected $view;
 
     public function before() {
+        $logged = $this->pixie->auth->user() != null;
         $this->view = $this->pixie-> view('main');
+        $this->view->logged = $logged;
     }
 
     public function after() {
@@ -25,12 +27,15 @@ class Page extends \PHPixie\Controller {
         }
 
         if($role && !$this->pixie->auth->has_role($role)){
-            $this->response->body = $this->pixie->auth->provider('password')->hash_password("qweasd");//"You don't have the permissions to access this page";
+            $this->response->body = "У вас нет доступа на эту страницу. Вернитесь  <a href='/'>обратно</a> пожалуйста";
             $this->execute=false;
             return false;
         }
 
         return true;
+    }
+    protected function has_role($role) {
+        return $role && $this->pixie->auth->has_role($role);
     }
 
 }
