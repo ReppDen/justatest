@@ -1,5 +1,5 @@
 <h3>Рассчет фонда стимулурующих выплат для университета</h3>
-<form method="POST" action="/award/fill_stage">
+<form method="GET" action="/award/fill_stage">
     <fieldset>
         <label>Год</label>
         <input type="number" name="year" value="<?php echo date("Y") ?>" required >

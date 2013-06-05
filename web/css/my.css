@@ -22,3 +22,10 @@ input[type=number] {
 .fix_button {
     margin-bottom: 10px!important;
 }
+
+a.sorter {
+    text-decoration: none;
+    border-bottom: 1px dotted rgb(0,136,220);
+}
+
+

@@ -8,9 +8,7 @@ class Award extends \App\Page {
             return;
 
         $stages = $this->pixie->orm->get('stage')->find_all();
-//        $faculties = $this->pixie->orm->get('faculty')->find_all();
         $this->view->stages = $stages;
-//        $this->view->faculties = $faculties;
         $this->view->subview = '/awards/add_award';
     }
 
@@ -74,6 +72,14 @@ class Award extends \App\Page {
         if(!$this->logged_in())
             return;
 
+        // включим обработку соритровки, если есть параметр
+        $sort = $this->request->get('sort');
+
+        $direction = 'asc';
+        $d = $this->request->get('dir');
+        if ($d != null && $d == 'desc') {
+            $direction = 'desc';
+        }
         $year = $this->request->param("id");
         if ($year == null) {
             $year = date("Y");
@@ -83,10 +89,23 @@ class Award extends \App\Page {
         $this->view->year = $year;
 
         if ($isAdmin) {
-            $this->view->awards = $this->pixie->orm->get('award')->where('year',$year)->find_all();
+            switch ($sort) {
+                case 'sum':
+                    $this->view->awards = $this->pixie->orm->get('award')->where('year',$year)->order_by('sum',$direction)->find_all();
+                    break;
+                case 'faculty':
+                    $this->view->awards = $this->pixie->orm->get('award')->with('faculty')->where('year',$year)->order_by("name",$direction)->find_all();
+                    break;
+                case 'type':
+                    $this->view->awards = $this->pixie->orm->get('award')->with('stage')->where('year',$year)->order_by("name",$direction)->find_all();
+                    break;
+                default:
+                    $this->view->awards = $this->pixie->orm->get('award')->where('year',$year)->order_by('date',$direction)->find_all();
+                    break;
+            }
         } else {
             $f_id = $this->pixie->orm->get('user')->where('id',$this->pixie->auth->user()->id)->find()->faculty->id;
-            $this->view->awards = $this->pixie->orm->get('award')->where('year', $year)->where("faculties_id", $f_id)->find_all();
+            $this->view->awards = $this->pixie->orm->get('award')->where('year', $year)->where("faculties_id", $f_id)->order_by($sort_field,$direction)->find_all();
         }
 
         $this->view->subview = '/awards/list_award';

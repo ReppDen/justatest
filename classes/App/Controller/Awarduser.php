@@ -18,7 +18,7 @@ class AwardUser extends \App\Page {
         if(!$this->logged_in())
             return;
 
-        if($this->request->method == 'POST'){
+        if($this->request->method == 'GET'){
             $stage = $this->pixie->orm->get('stage')->where('id',$this->request->post('stage'))->find();
             $year = $this->request->post('year');
             $this->view->stage = $stage;
