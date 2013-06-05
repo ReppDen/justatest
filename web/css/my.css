@@ -11,6 +11,10 @@ input[type=number] {
     width: 50px;
 }
 
+select.year {
+    width: 70px;
+}
+
 .btnpanel {
     display: block;
     height: 30px;

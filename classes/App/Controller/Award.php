@@ -47,14 +47,13 @@ class Award extends \App\Page {
             $points += (float) $this->request->post('o7_7') * 0.3;
             $points += (float) $this->request->post('o7_8') * 0.5;
             $points += (float) $this->request->post('o7_9') * 0.1;
-            echo $points;
 
             // создать запись
             $a = $this->pixie->orm->get('award');
 
             // слоижть в запись данные с формы
-            $a->date = date("Y-m-d");
-            $a->year = date("Y");
+            $a->date = date("Y-m-d H:i");
+            $a->year = $this->request->post('year');
             $a->sum = $points;
             $a->faculties_id = $this->pixie->orm->get('user')->where('id',$this->pixie->auth->user()->id)->find()->faculty->id;
             $a->stage_id = $this->request->post('stage_id');

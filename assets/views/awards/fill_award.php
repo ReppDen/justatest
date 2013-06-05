@@ -46,6 +46,8 @@ function second_stage() {
 <form method="POST" action="/award/save_stage">
     <fieldset>
         <input type="hidden" name="stage_id" value="<?php echo $stage->id; ?>"/>
+        <input type="hidden" name="year" value="<?php echo $year; ?>"/>
+
         <legend>Добавить расчет стимулирующих выплат </legend>
         <span class="subtitle">за период "<?php echo $stage->name ?>" в <?php echo $year?>г.</span>
         <?php

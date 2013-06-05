@@ -1,7 +1,12 @@
 <script>
     $(document).ready(function() {
         $("#set_date").click(function() {
-            var params = window.location.href.substring(window.location.href.lastIndexOf('?'));
+            var index = window.location.href.lastIndexOf('?');
+            var params = "";
+            if (index > 0) {
+                params = window.location.href.substring(index);
+            }
+
             location.href="/award/list_award/" + $("#year").val() + "/" + params;
         });
 
@@ -9,25 +14,26 @@
     });
 </script>
 
-<?php
-echo '<pre>';
-print_r($_GET);
-echo '</pre>';
-echo getDir("type");
-echo getDir("date");
-echo getDir("sum");
-echo getDir("faculty");
-?>
 <fieldset>
     <legend>Список всех расчетов за <?php echo $year; ?> год</legend>
 
     <table>
         <tr>
             <td>
-                Посмотреть за год:
+                <div style="padding-bottom: 10px;">Посмотреть за год:</div>
             </td>
             <td>
-                <input type="number" id="year" value="<?php echo $year ?>"/>
+                <select id="year" class="year">
+                    <?php
+                        for ($i = 1970; $i<2200; $i++) {
+                            if ($i == $year) {
+                                echo '<option value="'.$i.'" selected>'.$i.'</option>';
+                            } else {
+                                echo '<option value="'.$i.'">'.$i.'</option>';
+                            }
+                        }
+                    ?>
+                </select>
             </td>
             <td>
                 <Button id="set_date" class="btn fix_button">Посмотреть</Button>
@@ -62,6 +68,10 @@ function dirText($sort) {
             return "(по возрастанию)";
         }
     }
+}
+
+function formatDate($date) {
+    return date("d.m.Y H:i", strtotime($date));
 }
 ?>
 <table class="table">
@@ -102,7 +112,7 @@ function dirText($sort) {
                 '.$a->stage->name.'
             </td>
             <td>
-                '.$a->date.'
+                '.formatDate($a->date).'
             </td>
             <td>
                '.$a->sum.'
