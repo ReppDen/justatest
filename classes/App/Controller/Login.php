@@ -15,18 +15,6 @@ class Login extends \App\Page {
 
     }
 
-//    public function action_admin(){
-//
-//        if(!$this->logged_in('admin'))
-//            return;
-//
-//        $this->view->message = $this->pixie->auth->user()->email;
-//
-//        //Include 'hello.php' subview
-//        $this->view->subview = 'admin';
-//
-//    }
-
     public function action_login() {
 
         if($this->request->method == 'POST'){
@@ -81,14 +69,16 @@ class Login extends \App\Page {
             //username and password
             $hash = $this->pixie->auth->provider('password')->hash_password($password);
 
+            $fac = $this->request->post("faculty");
             $user = $this->pixie->orm->get('user');
             $user->email = $login;
             $user->password = $hash;
             $user->fio = $fio;
-            $user->faculty = $this->pixie->orm->get('faculty')->where('id',1)->find();
+            $user->faculty = $this->pixie->orm->get('faculty')->where('id',$fac)->find();
             $user->save();
             $this->redirect('/');
         }
+        $this->view->faculties = $this->pixie->orm->get('faculty')->find_all();
         $this->view->error = null;
         //Include 'login.php' subview
         $this->view->subview = 'register';

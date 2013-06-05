@@ -1,17 +1,17 @@
 <?php
 namespace App\Controller;
 
-class Award extends \App\Page {
+class AwardUser extends \App\Page {
 
     public function action_index(){
-        if(!$this->logged_in())
+        if(!$this->logged_in('admin'))
             return;
 
         $stages = $this->pixie->orm->get('stage')->find_all();
-//        $faculties = $this->pixie->orm->get('faculty')->find_all();
+        $users = $this->pixie->orm->get('user')->find_all();
         $this->view->stages = $stages;
-//        $this->view->faculties = $faculties;
-        $this->view->subview = '/awards/add_award';
+        $this->view->users = $users;
+        $this->view->subview = '/awards_users/add_award';
     }
 
     public function action_fill_stage() {
@@ -23,24 +23,23 @@ class Award extends \App\Page {
             $year = $this->request->post('year');
             $this->view->stage = $stage;
             $this->view->year = $year;
-            $this->view->subview = '/awards/fill_award';
+            $this->view->subview = '/awards_users/fill_award';
 
         } else {
             // нарушитель! алярма!
-            $this->redirect('/award/');
+            $this->redirect('/awardusers/');
         }
 
     }
 
     public function action_save_stage() {
 
-        if(!$this->logged_in())
+        if(!$this->logged_in('admin'))
             return;
 
         if($this->request->method == 'POST'){
             // рассчитать баллы
             $points = (float) 0.0;
-            $points += (float) $this->request->post('o7_1') * 1.2;
             $points += (float) $this->request->post('o7_2') * 1.0;
             $points += (float) $this->request->post('o7_3') * 1.0;
             $points += (float) $this->request->post('o7_4') * 1.0;
@@ -52,26 +51,26 @@ class Award extends \App\Page {
             echo $points;
 
             // создать запись
-            $a = $this->pixie->orm->get('award');
+            $a = $this->pixie->orm->get('award_user');
 
             // слоижть в запись данные с формы
             $a->date = date("Y-m-d");
             $a->year = date("Y");
             $a->sum = $points;
-            $a->faculties_id = $this->pixie->orm->get('user')->where('id',$this->pixie->auth->user()->id)->find()->faculty->id;
+            $a->users_id = 1; // FIXME $this->pixie->orm->get('user')->where('id',$this->pixie->auth->user()->id)->find()->faculty->id;
             $a->stage_id = $this->request->post('stage_id');
 
             // сохранить
             $a->save();
-            $this->redirect("/award/list_award/".date("Y"));
+            $this->redirect("/awarduser/list_award/".date("Y"));
         } else {
             // нарушитель! алярма!
-            $this->redirect('/award/');
+            $this->redirect('/awarduser/');
         }
     }
 
     public function action_list_award() {
-        if(!$this->logged_in())
+        if(!$this->logged_in('admin'))
             return;
 
         $year = $this->request->param("id");
@@ -83,13 +82,13 @@ class Award extends \App\Page {
         $this->view->year = $year;
 
         if ($isAdmin) {
-            $this->view->awards = $this->pixie->orm->get('award')->where('year',$year)->find_all();
+            $this->view->awards = $this->pixie->orm->get('award_user')->where('year',$year)->find_all();
         } else {
             $f_id = $this->pixie->orm->get('user')->where('id',$this->pixie->auth->user()->id)->find()->faculty->id;
-            $this->view->awards = $this->pixie->orm->get('award')->where('year', $year)->where("faculties_id", $f_id)->find_all();
+            $this->view->awards = $this->pixie->orm->get('award_user')->where('year', $year)->where("faculties_id", $f_id)->find_all();
         }
 
-        $this->view->subview = '/awards/list_award';
+        $this->view->subview = '/awards_users/list_award';
 
 
     }
@@ -102,11 +101,11 @@ class Award extends \App\Page {
         if (!$id) {
             return;
         }
-        $a = $this->pixie->orm->get('award')->where('id',$id)->find();
+        $a = $this->pixie->orm->get('award_user')->where('id',$id)->find();
 
         $a->delete();
 
-        $this->redirect("/award/list_award");
+        $this->redirect("/awarduser/list_award");
 
     }
 

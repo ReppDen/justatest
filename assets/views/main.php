@@ -4,6 +4,7 @@
     <link href="/css/bootstrap-combined.min.css" rel="stylesheet"/>
     <link href="/css/my.css" rel="stylesheet" />
     <script src="/js/jquery.js"></script>
+    <title>Система рассчета компенсаций</title>
 </head>
 <body>
 <div class="container">

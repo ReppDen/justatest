@@ -6,11 +6,20 @@
     <fieldset>
         <legend>Регистрация</legend>
         <label>Email пользователя</label>
-        <input type="text" name="username" placeholder="email" required />
+        <input type="email" name="username" placeholder="Email" required />
         <label>ФИО пользователя</label>
         <input type="text" name="fio" placeholder="ФИО" required/>
         <label>Пароль</label>
         <input type="password" name="password" required/>
+        <br/>
+        <label>Факультет</label>
+        <select name="faculty">
+            <?php
+            foreach($faculties as $f) {
+                echo '<option value="'.$f->id.'">'.$f->name.'</option>';
+            }
+            ?>
+        </select>
         <br/>
         <button type="submit" class="btn">Регистрация</button>
         <br/>
