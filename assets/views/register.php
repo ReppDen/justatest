@@ -21,7 +21,8 @@
             ?>
         </select>
         <br/>
-        <button type="submit" class="btn">Регистрация</button>
+        <button type="submit" class="btn btn-success btn-std100">Регистрация</button>
         <br/>
+        <a href="/">На главную</a>
     </fieldset>
 </form>

@@ -2,21 +2,27 @@
 <html>
 <head>
     <link href="/css/bootstrap-combined.min.css" rel="stylesheet"/>
+    <link href="/js/jqrowl/jquery.jgrowl.min.css" rel="stylesheet" />
     <link href="/css/my.css" rel="stylesheet" />
     <script src="/js/jquery.js"></script>
     <script src="/js/purl.js"></script>
+    <script src="/js/jqrowl/jquery.jgrowl.min.js"></script>
     <title>Система рассчета компенсаций</title>
 </head>
 <body>
 <div class="container">
     <div class="row">
-        <div class="span8 offset2">
+        <div class="row-fluid span8">
             <?php
             if ($logged) {
-                echo '<div class="btnpanel">
-                    <a href="/" class="btn" style="float: left;">Домой</a>
-                    <a href="/login/logout" class="btn" style="float: right;">Выход</a>
+                $menu = '<div class="main_menu">
+                    <a href="/" class="btn btn-spacing" style="float: left;">На главную</a>';
+                if ($is_admin) {
+                    $menu .= '<a href="/admin" class="btn btn-spacing" style="float: left;">Админка</a>';
+                }
+                $menu .= '<a href="/login/logout" class="btn btn-spacing" style="float: right;">Выход</a>
                 </div>';
+                echo $menu;
             }
             ?>
 

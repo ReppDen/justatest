@@ -15,12 +15,14 @@ select.year {
     width: 70px;
 }
 
-.btnpanel {
+.main_menu {
     display: block;
-    height: 30px;
+    height: 33px;
     padding: 5px;
-    background-color: #75b2cc;
-    border-bottom: #acbec6 3px solid;
+    background-color: #45ABCC;
+    -webkit-border-radius: 0px 0px 8px 8px;
+    -moz-border-radius:  0px 0px 8px 8px;
+    border-radius:  0px 0px 8px 8px;
 }
 
 .fix_button {
@@ -32,4 +34,17 @@ a.sorter {
     border-bottom: 1px dotted rgb(0,136,220);
 }
 
+.btn-std100 {
+     width: 100px;
+ }
+
+.btn-std {
+    width: 100px;
+}
+
+.btn-spacing {
+    margin-left: 4px;
+    margin-right: 4px;
+
+}
 

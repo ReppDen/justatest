@@ -65,6 +65,6 @@ function second_stage() {
             }
         ?>
         <br/>
-        <button type="submit" class="btn">Добавить</button>
+        <button type="submit" class="btn  btn-success">Добавить</button>
     </fieldset>
 </form>

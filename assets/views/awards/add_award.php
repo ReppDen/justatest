@@ -8,7 +8,19 @@
         }
         ?>
         <label>Год</label>
-        <input type="number" name="year" value="<?php echo date("Y") ?>" required >
+<!--        <input type="number" name="year" value="--><?php //echo date("Y") ?><!--" required >-->
+        <select id="year" class="year">
+            <?php
+            $year = date("Y");
+            for ($i = 1970; $i< $year + 20; $i++) {
+                if ($i == $year) {
+                    echo '<option value="'.$i.'" selected>'.$i.'</option>';
+                } else {
+                    echo '<option value="'.$i.'">'.$i.'</option>';
+                }
+            }
+            ?>
+        </select>
         <br/>
 
         <button type="submit" class="btn">Далее</button>

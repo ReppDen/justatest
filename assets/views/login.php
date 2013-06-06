@@ -10,7 +10,7 @@
         <label>Пароль</label>
         <input type="password" name="password" required />
         <br/>
-        <button type="submit" class="btn">Вход</button>
+        <button type="submit" class="btn btn-success btn-std100">Вход</button>
         <br/>
         <a href="/login/register">Регистрация</a>
         <br/>

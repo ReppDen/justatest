@@ -8,9 +8,15 @@ class Page extends \PHPixie\Controller {
     protected $view;
 
     public function before() {
-        $logged = $this->pixie->auth->user() != null;
+        $user = $this->pixie->auth->user();
+        $logged = $user != null;
+        $is_admin = false;
+        if ($logged) {
+            $is_admin = $this->pixie->auth->has_role('admin');
+        }
         $this->view = $this->pixie-> view('main');
         $this->view->logged = $logged;
+        $this->view->is_admin = $is_admin;
     }
 
     public function after() {
