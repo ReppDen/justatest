@@ -8,8 +8,24 @@
     <script src="/js/purl.js"></script>
     <script src="/js/jqrowl/jquery.jgrowl.min.js"></script>
     <title>Система рассчета компенсаций</title>
+    <script>
+        $(document).ready(function() {
+            $("#loading").hide();
+            $(document).ajaxStart(function() {
+                $("#loading").show();
+            });
+            $(document).ajaxStop(function() {
+                $("#loading").hide();
+            });
+        });
+
+
+    </script>
 </head>
 <body>
+<div id="loading">
+    <img src="/img/black-load.gif">
+</div>
 <div class="container">
     <div class="row">
         <div class="row-fluid span8">

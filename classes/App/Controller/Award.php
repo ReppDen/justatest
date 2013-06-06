@@ -8,7 +8,9 @@ class Award extends \App\Page {
             return;
 
         $stages = $this->pixie->orm->get('stage')->find_all();
+        $faculties = $this->pixie->orm->get('faculty')->find_all();
         $this->view->stages = $stages;
+        $this->view->faculties =$faculties;
         $this->view->subview = '/awards/add_award';
     }
 
@@ -21,6 +23,12 @@ class Award extends \App\Page {
             $year = $this->request->post('year');
             $this->view->stage = $stage;
             $this->view->year = $year;
+            $this->view->nf = $this->request->post('nf');
+            $this->view->nu = $this->request->post('nu');
+            $this->view->nprf = $this->request->post('nprf');
+            $this->view->npru = $this->request->post('npru');
+            $this->view->faculty = $this->request->post('faculty');
+            $this->view->overwrite = $this->request->post('overwrite');
             $this->view->subview = '/awards/fill_award';
 
         } else {
@@ -36,9 +44,23 @@ class Award extends \App\Page {
             return;
 
         if($this->request->method == 'POST'){
+            echo '<pre>';
+            print_r($_POST);
+            echo '</pre>';
+
+            // сносим старую запись
+            if ($this->request->post('overwrite')) {
+                $old = $this->pixie->orm->get('award')->where('faculties_id',$this->request->post('faculty'))->where('year', $this->request->post('year'))->find();
+                $old->delete();
+            }
+
+            // TODO validation
             // рассчитать баллы
             $points = (float) 0.0;
-            $points += (float) $this->request->post('o7_1') * 1.2;
+            $check = $this->request->post('o7_1');
+            if ($check == "on") {
+                $points += 1.2;
+            }
             $points += (float) $this->request->post('o7_2') * 1.0;
             $points += (float) $this->request->post('o7_3') * 1.0;
             $points += (float) $this->request->post('o7_4') * 1.0;
@@ -55,8 +77,13 @@ class Award extends \App\Page {
             $a->date = date("Y-m-d H:i");
             $a->year = $this->request->post('year');
             $a->sum = $points;
-            $a->faculties_id = $this->pixie->orm->get('user')->where('id',$this->pixie->auth->user()->id)->find()->faculty->id;
+            // $this->pixie->orm->get('user')->where('id',$this->pixie->auth->user()->id)->find()->faculty->id;
+            $a->faculties_id = $this->request->post('faculty');
             $a->stage_id = $this->request->post('stage_id');
+            $a->nf = $this->request->post('nf');
+            $a->nu = $this->request->post('nu');
+            $a->nprf = $this->request->post('nprf');
+            $a->npru = $this->request->post('npru');
 
             // сохранить
             $a->save();
@@ -125,23 +152,5 @@ class Award extends \App\Page {
 
 
     }
-
-    public function action_delete_award() {
-        if(!$this->logged_in('admin'))
-            return;
-
-        $id = $this->request->param("id");
-        if (!$id) {
-            return;
-        }
-        $a = $this->pixie->orm->get('award')->where('id',$id)->find();
-
-        $a->delete();
-
-        $this->redirect("/award/list_award");
-
-    }
-
-
 
 }

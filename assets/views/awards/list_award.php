@@ -12,6 +12,20 @@
 
         $("#sort").val($.url().param("sort"));
     });
+
+    function delete_award(id) {
+        $.ajax({
+            type: "GET",
+            url: "/ajax/delete_award/" + id,
+            success: function (res) {
+                $.jGrowl("Запись успешно удалена!");
+                $("#tr_" + id).remove();
+            },
+            error: function(res) {
+                $.jGrowl("Произошла ошибка во время запроса к серверу");
+            }
+        });
+    }
 </script>
 
 <fieldset>
@@ -47,7 +61,7 @@
 <?php
 function getDir($sort) {
     if (!isset($_GET['dir']) || !isset($_GET['sort'])) {
-        return 'desc';
+        return 'asc';
     } else
         if ($_GET['sort'] == $sort && $_GET['dir'] == 'asc') {
             return 'desc';
@@ -104,7 +118,7 @@ function formatDate($date) {
     foreach ($awards as $a) {
         $i++;
         echo '
-        <tr>
+        <tr id="tr_'.$a->id.'">
             <td>
                 '.$i.'
             </td>
@@ -126,7 +140,7 @@ function formatDate($date) {
         if ($can_delete) {
             echo '
                 <td>
-                    <a href="/award/delete_award/'.$a->id.'">Удалить</a>
+                    <a href="#" onclick="delete_award('.$a->id.')">Удалить</a>
                 </td>
             ';
         }
