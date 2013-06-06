@@ -9,5 +9,29 @@
 //} else {
 //    echo "rty";
 //}
-echo date("Y-m-d H:i");
+foreach ($calcs as $c) {
+//    $i = 1 + 1;
+//  echo
+////      $c.' '.
+//      $c->name .' '
+////      $c->year .' '
+////      .$c->fsf .' '
+////      .$c->money .'| '
+////      .$c->awards->money .' '
+//      .$c->year .' '
+////      .$c->stage->calcfund .' '
+//  ."<br/>";
+    echo '<pre>';
+    print_r($c);
+    echo '</pre>';
+    echo $c['name'].' '
+        .$c['year'].' '
+        .$c['test'].' '
+        .$c['test'].' '
+        .$c['test'].' '
+        ."<br/>";
+
+
+
+}
 ?>

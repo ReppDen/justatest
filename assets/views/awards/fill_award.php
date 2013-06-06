@@ -46,9 +46,7 @@ function second_stage() {
         <input type="hidden" name="stage_id" value="<?php echo $stage->id; ?>"/>
         <input type="hidden" name="year" value="<?php echo $year; ?>"/>
         <input type="hidden" name="nf" value="<?php echo $nf; ?>"/>
-        <input type="hidden" name="nu" value="<?php echo $nu; ?>"/>
         <input type="hidden" name="nprf" value="<?php echo $nprf; ?>"/>
-        <input type="hidden" name="npru" value="<?php echo $npru; ?>"/>
         <input type="hidden" name="faculty" value="<?php echo $faculty; ?>"/>
         <input type="hidden" name="overwrite" value="<?php echo $overwrite; ?>"/>
 

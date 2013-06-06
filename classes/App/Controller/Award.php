@@ -24,9 +24,7 @@ class Award extends \App\Page {
             $this->view->stage = $stage;
             $this->view->year = $year;
             $this->view->nf = $this->request->post('nf');
-            $this->view->nu = $this->request->post('nu');
             $this->view->nprf = $this->request->post('nprf');
-            $this->view->npru = $this->request->post('npru');
             $this->view->faculty = $this->request->post('faculty');
             $this->view->overwrite = $this->request->post('overwrite');
             $this->view->subview = '/awards/fill_award';
@@ -44,10 +42,6 @@ class Award extends \App\Page {
             return;
 
         if($this->request->method == 'POST'){
-            echo '<pre>';
-            print_r($_POST);
-            echo '</pre>';
-
             // сносим старую запись
             if ($this->request->post('overwrite')) {
                 $old = $this->pixie->orm->get('award')->where('faculties_id',$this->request->post('faculty'))->where('year', $this->request->post('year'))->find();
@@ -81,13 +75,12 @@ class Award extends \App\Page {
             $a->faculties_id = $this->request->post('faculty');
             $a->stage_id = $this->request->post('stage_id');
             $a->nf = $this->request->post('nf');
-            $a->nu = $this->request->post('nu');
             $a->nprf = $this->request->post('nprf');
-            $a->npru = $this->request->post('npru');
 
             // сохранить
             $a->save();
-            $this->redirect("/award/list_award/".date("Y"));
+
+            $this->redirect("/award/list_award/".$this->request->post('year'));
         } else {
             // нарушитель! алярма!
             $this->redirect('/award/');

@@ -42,16 +42,9 @@
                         <input type="number" name="nf"  required/>
                         <br/>
 
-                        <label>Количество студентов университета (приведенный контингент)</label>
-                        <input type="number" name="nu"  required/>
-                        <br/>
-
                         <label>Количество штатных преподавателей на факультете (кафедре)</label>
                         <input type="number" name="nprf" required/>
                         <br/>
-
-                        <label>Количество штатных преподавателей в университете</label>
-                        <input type="number" name="npru"  required/>
                     </div>
         </div>
     </fieldset>

@@ -10,4 +10,6 @@ class Stage extends \PHPixie\ORM\Model {
 
     //Specify table name
     public $table='stage';
+
+
 }
