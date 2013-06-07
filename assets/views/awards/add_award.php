@@ -14,8 +14,10 @@
                         </select>
                         <label>Этап</label>
                         <?php
+                        $i = 0;
                         foreach ($stages as $s) {
-                            echo '<input type="radio" name="stage" value="'.$s->id.'" required />'.$s->name.'<br/>';
+                            $i++;
+                            echo '<input type="radio" id="stage[]" name="stage" value="'.$s->id.'" required />'.$s->name.'<br/>';
                         }
                         ?>
                         <br/>
@@ -50,15 +52,34 @@
     </fieldset>
     <input type="hidden" id="overwrite" name="overwrite" value="0" required/>
     <button type="button" class="btn" id="next_btn">Далее</button>
+    <button type="submit" class="hidden" id="submit_btn">submit</button>
+
 </form>
 <script>
     $(document).ready(function() {
         $("#next_btn").click(function() {
+            // если форма не валидна - выходим
+            var form = $('#form')[0];
+            if (!form.checkValidity()) {
+                $('#form').find('#submit_btn').click();
+                return;
+            }
+
+            // ищем этап и в путь
+            var s = $('#form').serialize();
+            var vals = s.split("&");
+            var stage = 0;
+            for (var i=0; i < vals.length; i++) {
+                if (vals[i].startsWith("stage")) {
+                    stage = vals[i].substr(vals[i].lastIndexOf("=")+1);
+                }
+            }
             $.ajax({
                 type: "GET",
                 url: "/ajax/check_award",
                 data: {
                     id: $('#faculty').val(),
+                    stage: stage,
                     year:$('#year').val()
                 },
                 success: function (res) {
@@ -69,9 +90,11 @@
                         if (confirm("Расчет для выбранного года и этапа уже существет. Перезаписать имеющийся?")) {
                             $("#overwrite").val(1);
                             $("#form").submit();
+//                            $("#form").find(':submit').click();
                         }
                     } else {
                         $("#form").submit();
+//                        $("#form").find(':submit').click();
                     }
                 },
                 error: function(res) {

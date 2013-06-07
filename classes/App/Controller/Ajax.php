@@ -19,8 +19,9 @@ class Ajax extends \PHPixie\Controller {
         if ($this->request->method == 'GET'){
             $id = $this->request->get('id');
             $year = $this->request->get('year');
+            $stage_id = $this->request->get('stage');
             if ($id != null && $year != null) {
-                $a = $this->pixie->orm->get('award')->where('faculties_id',$id)->where('year', $year)->find();
+                $a = $this->pixie->orm->get('award')->where('faculties_id',$id)->where('year', $year)->where('stage_id', $stage_id)->find();
                 echo $a->loaded();
             }
         }

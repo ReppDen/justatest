@@ -48,21 +48,48 @@ class Award extends \App\Page {
                 $old->delete();
             }
 
+            $stage_id = $this->request->post('stage_id');
+
             // TODO validation
             // рассчитать баллы
             $points = (float) 0.0;
-            $check = $this->request->post('o7_1');
-            if ($check == "on") {
-                $points += 1.2;
+            switch ($stage_id) {
+                case 1:
+                    $check = $this->request->post('o7_1');
+                    if ($check == "on") {
+                        $points += 1.2;
+                    }
+                    $points += (float) $this->request->post('o7_2') * 1.0;
+                    $points += (float) $this->request->post('o7_3') * 1.0;
+                    $points += (float) $this->request->post('o7_4') * 1.0;
+                    $points += (float) $this->request->post('o7_5') * 0.1;
+                    $points += (float) $this->request->post('o7_6') * 0.5;
+                    $points += (float) $this->request->post('o7_7') * 0.3;
+                    $points += (float) $this->request->post('o7_8') * 0.5;
+                    $points += (float) $this->request->post('o7_9') * 0.1;
+                    break;
+                case 2:
+                    $points += (float) $this->request->post('o2_1') * 0.25;
+                    $points += (float) $this->request->post('o2_2') * 0.2;
+                    $points += (float) $this->request->post('o3_1');
+                    $points += (float) $this->request->post('o3_2');
+                    $points += (float) $this->request->post('o3_3');
+                    break;
+                case 3:
+                    $points += (float) $this->request->post('o1_1');
+                    $points += (float) $this->request->post('o1_2');
+                    $points += (float) $this->request->post('o1_3');
+                    $points += (float) $this->request->post('o4_1');
+                    $check = $this->request->post('o5_1');
+                    if ($check == "on") {
+                        $points += 1.0;
+                    }
+                    $points += (float) $this->request->post('o6_1');
+                    $points += (float) $this->request->post('b1_1');
+                    $points += (float) $this->request->post('b1_2');
+                    break;
             }
-            $points += (float) $this->request->post('o7_2') * 1.0;
-            $points += (float) $this->request->post('o7_3') * 1.0;
-            $points += (float) $this->request->post('o7_4') * 1.0;
-            $points += (float) $this->request->post('o7_5') * 0.1;
-            $points += (float) $this->request->post('o7_6') * 0.5;
-            $points += (float) $this->request->post('o7_7') * 0.3;
-            $points += (float) $this->request->post('o7_8') * 0.5;
-            $points += (float) $this->request->post('o7_9') * 0.1;
+
 
             // создать запись
             $a = $this->pixie->orm->get('award');
@@ -73,7 +100,7 @@ class Award extends \App\Page {
             $a->sum = $points;
             // $this->pixie->orm->get('user')->where('id',$this->pixie->auth->user()->id)->find()->faculty->id;
             $a->faculties_id = $this->request->post('faculty');
-            $a->stage_id = $this->request->post('stage_id');
+            $a->stage_id = $stage_id;
             $a->nf = $this->request->post('nf');
             $a->nprf = $this->request->post('nprf');
 
