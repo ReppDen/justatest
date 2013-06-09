@@ -9,7 +9,7 @@
 //} else {
 //    echo "rty";
 //}
-foreach ($calcs as $c) {
+//foreach ($calcs as $c) {
 //    $i = 1 + 1;
 //  echo
 ////      $c.' '.
@@ -21,17 +21,17 @@ foreach ($calcs as $c) {
 //      .$c->year .' '
 ////      .$c->stage->calcfund .' '
 //  ."<br/>";
-    echo '<pre>';
-    print_r($c);
-    echo '</pre>';
-    echo $c['name'].' '
-        .$c['year'].' '
-        .$c['test'].' '
-        .$c['test'].' '
-        .$c['test'].' '
-        ."<br/>";
+//    echo '<pre>';
+//    print_r($c);
+//    echo '</pre>';
+//    echo $c['name'].' '
+//        .$c['year'].' '
+//        .$c['test'].' '
+//        .$c['test'].' '
+//        .$c['test'].' '
+//        ."<br/>";
+echo $calcs." qwe";
 
 
-
-}
+//}
 ?>

@@ -27,11 +27,12 @@ class Test extends \App\Page {
 //            ->where('calc_fund.year','2013')
 //            ->execute();
 
-        $calcs =  $this->pixie->db->query('select')->table('awards')
-            ->join(array('stage','s'),array('s.id','awards.stage_id'))
-            ->join(array('calc_fund','c'),array('s.id','c.stage_id'))
-            ->where('awards.year','2013')
-            ->execute()->as_array();
+//        $calcs =  $this->pixie->db->query('select')->table('awards')
+//            ->join(array('stage','s'),array('s.id','awards.stage_id'))
+//            ->join(array('calc_fund','c'),array('s.id','c.stage_id'))
+//            ->where('awards.year','2013')
+//            ->execute()->as_array();
+        $calcs = $this->pixie->orm->get('user')->where('faculties_id','1')->count_all();
         $this->view->calcs = $calcs;
         $this->view->subview = '/test/test';
     }

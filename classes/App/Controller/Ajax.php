@@ -27,6 +27,25 @@ class Ajax extends \PHPixie\Controller {
         }
     }
 
+
+    /**
+     * Проверяет, есть ли у указанного пользователя расчеты
+     */
+    public function action_check_awarduser() {
+        if(!$this->logged_in('admin'))
+            return;
+
+        if ($this->request->method == 'GET'){
+            $id = $this->request->get('id');
+            $year = $this->request->get('year');
+            $stage_id = $this->request->get('stage');
+            if ($id != null && $year != null) {
+                $a = $this->pixie->orm->get('awarduser')->where('users_id',$id)->where('year', $year)->where('stage_id', $stage_id)->find();
+                echo $a->loaded();
+            }
+        }
+    }
+
     /**
      * удаляет указанный рассчет
      */
@@ -57,4 +76,16 @@ class Ajax extends \PHPixie\Controller {
     }
 
 
+    public function action_get_prep() {
+        if($this->pixie->auth->user() == null){
+            return false;
+        }
+
+        if ($this->request->method == 'GET'){
+            $id = $this->request->get('id');
+            $count = $this->pixie->orm->get('user')->where('faculties_id',$id)->count_all();
+            echo $count;
+        }
+
+    }
 }

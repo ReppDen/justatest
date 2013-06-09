@@ -90,11 +90,9 @@
                         if (confirm("Расчет для выбранного года и этапа уже существет. Перезаписать имеющийся?")) {
                             $("#overwrite").val(1);
                             $("#form").submit();
-//                            $("#form").find(':submit').click();
                         }
                     } else {
                         $("#form").submit();
-//                        $("#form").find(':submit').click();
                     }
                 },
                 error: function(res) {
